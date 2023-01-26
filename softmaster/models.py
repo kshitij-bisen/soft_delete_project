@@ -2,7 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-class SoftDelete(models.Model):
+
+class SoftDelete(models.Model):                          # Model obj is record.(goes in self)
     is_deleted = models.BooleanField(default=False)
 
     def soft_delete(self):
@@ -14,11 +15,13 @@ class SoftDelete(models.Model):
         self.save()
 
     class Meta:
-        abstract =True
+        abstract = True
 
-class ColorManager(models.Manager):
+
+class ColorManager(models.Manager):                    # Manager obj is queryset(check it)
     def get_queryset(self):
         return super().get_queryset().filter(is_deleted=False)
+
 
 class Color(SoftDelete):
     color_name = models.CharField(max_length=100)
